@@ -6,15 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name="produto_table")
+@Data 
 public class Produto {
 	
-
-	@Getter @Setter 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;

@@ -9,29 +9,33 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 @Entity
 @Table(name="user_table")
+@Data
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Getter @Setter 
+	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
 	private String email;
 	private String nome;
 	private String imagemPerfil;
+	private String senha;
 	@OneToMany(mappedBy = "comprador")
 	private  List<Produto> produtosDoUsuario;
 	
-	public Usuario(String email,String nome,String imagemPerfil) {
+	public Usuario() {
+		
+	}
+	public Usuario(String email,String nome,String imagemPerfil,String senha) {
 		
 		this.email =  email;
 		this.nome = nome;
 		this.imagemPerfil = imagemPerfil;
-		
+		this.senha = senha;
 	}
 }
