@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Entity
 @Table(name="user_table")
-public class User implements Serializable {
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,7 +23,7 @@ public class User implements Serializable {
 	private String nome;
 	private String imagemPerfil;
 	
-	public User(String email,String nome,String imagemPerfil) {
+	public Usuario(String email,String nome,String imagemPerfil) {
 		
 		this.email =  email;
 		this.nome = nome;
