@@ -1,8 +1,5 @@
 package com.capyba.testeTecnico.DTOs;
 
-import java.util.List;
-
-import com.capyba.testeTecnico.entities.Produto;
 import com.capyba.testeTecnico.entities.Usuario;
 
 import lombok.Getter;
@@ -15,7 +12,6 @@ public class UsuarioDTO {
 	private String email;
 	private String nome;
 	private String imagemPerfil;
-	private  List<Produto> produtosDoUsuario;
 	
 	
 	public UsuarioDTO(Usuario u) {
@@ -23,7 +19,6 @@ public class UsuarioDTO {
 		this.email = u.getEmail();
 		this.nome = u.getNome();
 		this.imagemPerfil = u.getImagemPerfil();
-		this.produtosDoUsuario = u.getProdutosDoUsuario();
 	}
 	
 }

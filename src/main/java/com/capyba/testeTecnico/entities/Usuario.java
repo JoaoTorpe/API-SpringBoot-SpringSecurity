@@ -1,18 +1,25 @@
 package com.capyba.testeTecnico.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
 @Table(name="user_table")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,17 +32,19 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String imagemPerfil;
 	private String senha;
-	@OneToMany(mappedBy = "comprador")
+	@ManyToMany
+	@JoinTable(name = "Compra",
+			joinColumns = @JoinColumn(name = "usuario_id"),
+		    inverseJoinColumns = @JoinColumn(name = "produto_id"))
 	private  List<Produto> produtosDoUsuario;
 	
-	public Usuario() {
-		
-	}
+	
 	public Usuario(String email,String nome,String imagemPerfil,String senha) {
 		
 		this.email =  email;
 		this.nome = nome;
 		this.imagemPerfil = imagemPerfil;
 		this.senha = senha;
+		this.produtosDoUsuario = new ArrayList<Produto>();
 	}
 }
