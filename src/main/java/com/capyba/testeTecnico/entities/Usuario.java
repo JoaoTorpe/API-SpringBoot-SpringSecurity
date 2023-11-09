@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,7 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "Compra",
 			joinColumns = @JoinColumn(name = "usuario_id"),
 		    inverseJoinColumns = @JoinColumn(name = "produto_id"))
+	@JsonIgnore
 	private  List<Produto> produtosDoUsuario;
 	
 	
