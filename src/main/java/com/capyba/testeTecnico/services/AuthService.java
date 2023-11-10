@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import com.capyba.testeTecnico.repositories.UsuarioRepository;
 
 @Service
-public class AuthService implements UserDetailsService {
+public class AuthService implements UserDetailsService 
+{
 	
 	
 
