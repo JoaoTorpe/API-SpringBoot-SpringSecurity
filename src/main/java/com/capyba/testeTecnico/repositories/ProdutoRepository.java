@@ -7,5 +7,7 @@ import com.capyba.testeTecnico.entities.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-
+	
+	
+	
 }

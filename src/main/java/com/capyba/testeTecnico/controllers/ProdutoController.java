@@ -21,14 +21,14 @@ public class ProdutoController {
 	@GetMapping
 	public ResponseEntity<List<Produto>> retornaTodos() {
 		
-		List<Produto> produtos = repository.findAll();
+	
+		List<Produto> produtos =  repository.findAll();
 		
 		if(produtos.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}
 		
 		return ResponseEntity.ok().body(produtos);
-		
 		
 	}
 	
