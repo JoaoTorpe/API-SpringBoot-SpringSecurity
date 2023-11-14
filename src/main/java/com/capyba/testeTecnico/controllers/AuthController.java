@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,8 @@ public class AuthController {
 	public ResponseEntity registarUsuario(@RequestBody RegistroDTO u) {
 if(repository.findByEmail(u.getEmail()) != null) return ResponseEntity.badRequest().build(); 
 		
-		repository.save( new Usuario(u.getEmail(),u.getNome(),u.getImagemPerfil(),u.getSenha()));
+String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
+		repository.save( new Usuario(u.getEmail(),u.getNome(),u.getImagemPerfil(),senhaEncrypitada));
 		
 		return ResponseEntity.ok().build();
 	}

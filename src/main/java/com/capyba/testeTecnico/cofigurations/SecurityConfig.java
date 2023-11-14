@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,8 +23,10 @@ public class SecurityConfig {
 	                .csrf(csrf -> csrf.disable())
 	                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	                .authorizeHttpRequests(authorize -> authorize
-	                		.requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
-	                		.anyRequest().permitAll()
+	                		 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+	                		.requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
+	                		.requestMatchers(HttpMethod.POST,"/auth/registrar").permitAll()
+	                		.anyRequest().authenticated()
 	                )
 	                
 	                .build();
@@ -33,6 +37,11 @@ public class SecurityConfig {
 	 public AuthenticationManager autheticaAuthenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		 return authenticationConfiguration.getAuthenticationManager();
 		 
+	 }
+	 
+	 @Bean
+	 public PasswordEncoder passWordEncoder() {
+		 return new BCryptPasswordEncoder();
 	 }
 	
 	
