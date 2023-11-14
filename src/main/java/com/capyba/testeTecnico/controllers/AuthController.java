@@ -14,22 +14,27 @@ import com.capyba.testeTecnico.DTOs.LoginDTO;
 import com.capyba.testeTecnico.DTOs.RegistroDTO;
 import com.capyba.testeTecnico.entities.Usuario;
 import com.capyba.testeTecnico.repositories.UsuarioRepository;
+import com.capyba.testeTecnico.services.tokenService;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 	
 	@Autowired
 	private UsuarioRepository repository;
- @Autowired
+	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private tokenService tokenServ;
+	
 	
 	@PostMapping("/login")
 	
 	public ResponseEntity login(@RequestBody LoginDTO data) {
 		var usuarioSenha = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getSenha());
 		var auth = authenticationManager.authenticate(usuarioSenha);
-	
-		return ResponseEntity.ok().build();
+		var token = tokenServ.generateToken((Usuario)auth.getPrincipal());
+		
+		return ResponseEntity.ok(token);
 	}
 	
 	

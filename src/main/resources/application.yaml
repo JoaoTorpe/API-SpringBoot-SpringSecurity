@@ -1,3 +1,6 @@
+ambiente:
+secret: jvts1
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/capybasoft
