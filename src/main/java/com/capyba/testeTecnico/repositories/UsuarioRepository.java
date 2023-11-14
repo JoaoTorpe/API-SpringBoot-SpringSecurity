@@ -9,6 +9,6 @@ import com.capyba.testeTecnico.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
 	
-	UserDetails  findByEmail(String email);
+	UserDetails findByEmail(String email);
 
 }
