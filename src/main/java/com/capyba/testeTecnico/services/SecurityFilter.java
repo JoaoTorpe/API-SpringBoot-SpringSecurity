@@ -22,12 +22,13 @@ public class SecurityFilter extends OncePerRequestFilter{
 		 tokenService tokenServ;
 		@Autowired
 		UsuarioRepository usuarioRepository;
-		
+		@Autowired
+		RevokService revok;
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)throws ServletException, IOException 
 	{
-		  var token = this.recoverToken(request);
-	        if(token != null){
+		  var token = tokenServ.recoverToken(request);
+	        if(token != null && !revok.isInBlackList(token)){
 	            var login = tokenServ.tokenValidation(token);
 	            UserDetails user = usuarioRepository.findByEmail(login);
 
@@ -38,15 +39,6 @@ public class SecurityFilter extends OncePerRequestFilter{
 		
 	}
 	
-	public String  recoverToken(HttpServletRequest req) {
-		
-		var header = req.getHeader("Authorization");
-		
-		if(header == null) return null;
-		
-		return header.replace("Bearer ", "");
-		
-		
-	}
+
 
 }
