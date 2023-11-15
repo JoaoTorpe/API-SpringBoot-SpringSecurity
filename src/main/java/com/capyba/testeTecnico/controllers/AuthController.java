@@ -14,7 +14,10 @@ import com.capyba.testeTecnico.DTOs.LoginDTO;
 import com.capyba.testeTecnico.DTOs.RegistroDTO;
 import com.capyba.testeTecnico.entities.Usuario;
 import com.capyba.testeTecnico.repositories.UsuarioRepository;
+import com.capyba.testeTecnico.services.RevokService;
 import com.capyba.testeTecnico.services.tokenService;
+
+import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -25,7 +28,8 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private tokenService tokenServ;
-	
+	@Autowired
+	private RevokService revok;
 	
 	@PostMapping("/login")
 	
@@ -48,6 +52,12 @@ String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
 		return ResponseEntity.ok().build();
 	}
 	
+	@PostMapping("/logout")
+	public ResponseEntity logout(HttpServletRequest req) {
+		String token = tokenServ.recoverToken(req);
+		revok.addToBlackList(token);
+		return ResponseEntity.ok().build();
+	}
 	
 	
 }
