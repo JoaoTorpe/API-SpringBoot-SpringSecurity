@@ -3,6 +3,7 @@ package com.capyba.testeTecnico.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,15 @@ public class ProdutoController {
 		List<Produto> produtosFiltrados = repository.findByDisponibilidade(disponivel);
 		
 		return ResponseEntity.ok().body(produtosFiltrados);
+		
+	}
+	
+	@GetMapping(params = "orderby")
+	public ResponseEntity<List<Produto>> ordenaPor(@PathParam("orderby") String orderby){
+		
+		List<Produto> produtosOrdenados = repository.findAll(Sort.by(orderby));
+		
+		return ResponseEntity.ok().body(produtosOrdenados);
 		
 	}
 	
