@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,14 +66,28 @@ String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
 		return ResponseEntity.ok().build();
 	}
 	
+	@PutMapping
+	public ResponseEntity updateCadastro(@RequestBody RegistroDTO u,HttpServletRequest req) {
+		
+		var token = tokenServ.recoverToken(req);
+		String login = tokenServ.tokenValidation(token);
+		Usuario paraSerAlterado = (Usuario) repository.findByEmail(login);
+		paraSerAlterado.setEmail(u.getEmail());
+		paraSerAlterado.setImagemPerfil(u.getImagemPerfil());
+		paraSerAlterado.setNome(u.getNome());
+		paraSerAlterado.setSenha(new BCryptPasswordEncoder().encode(u.getSenha()));
+		repository.save(paraSerAlterado);
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping("/policy")
 	public ResponseEntity policy() throws FileNotFoundException{
 		InputStream inputStream = new FileInputStream("src\\main\\java\\policy\\policy.pdf");
         InputStreamResource resource = new InputStreamResource(inputStream);
         
         return ResponseEntity.ok().body(resource);
-		
 	}
+	
 	
 	
 }
