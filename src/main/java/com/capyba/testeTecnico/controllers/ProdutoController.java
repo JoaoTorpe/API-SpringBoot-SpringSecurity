@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capyba.testeTecnico.entities.Produto;
 import com.capyba.testeTecnico.repositories.ProdutoRepository;
 
-import jakarta.websocket.server.PathParam;
-
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -33,7 +31,7 @@ public class ProdutoController {
 	}
 	
 	@GetMapping(params = "disponivel")
-	public ResponseEntity<List<Produto>> estaDisponivel(@RequestParam("disponivel") boolean disponivel){
+	public ResponseEntity<List<Produto>> estaDisponivel(@RequestParam(required = false) boolean disponivel){
 		
 		List<Produto> produtosFiltrados = repository.findByDisponibilidade(disponivel);
 		
@@ -42,14 +40,14 @@ public class ProdutoController {
 	}
 	
 	@GetMapping(params = "orderby")
-	public ResponseEntity<List<Produto>> ordenaPor(@RequestParam("orderby") String orderby){
+	public ResponseEntity<List<Produto>> ordenaPor(@RequestParam(required = false) String orderby){
 		List<Produto> produtosOrdenados = repository.findAll(Sort.by(orderby));
 		return ResponseEntity.ok().body(produtosOrdenados);
 	}
 	
 	@GetMapping(params = "search")
-	public ResponseEntity<List<Produto>> buscar(@RequestParam("search") String ref){
-		List<Produto> produtosFiltrados = repository.findByNomeContaining(ref);
+	public ResponseEntity<List<Produto>> buscar(@RequestParam(required = false) String search){
+		List<Produto> produtosFiltrados = repository.findByNomeContaining(search);
 		return ResponseEntity.ok().body(produtosFiltrados);
 	}
 	
