@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capyba.testeTecnico.entities.Produto;
 import com.capyba.testeTecnico.repositories.ProdutoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
 	
 	@Autowired
 	ProdutoRepository repository;
-
+	
 	@GetMapping
 	public ResponseEntity<List<Produto>> retornaTodos() {
 		List<Produto> produtos =  repository.findAll();
@@ -29,7 +31,7 @@ public class ProdutoController {
 		}
 		return ResponseEntity.ok().body(produtos);
 	}
-	
+	@Operation(description = "Orderby ordena por 'nome' ou por 'preco'")
 	@GetMapping(params = "disponivel")
 	public ResponseEntity<List<Produto>> estaDisponivel(@RequestParam(required = false) boolean disponivel){
 		

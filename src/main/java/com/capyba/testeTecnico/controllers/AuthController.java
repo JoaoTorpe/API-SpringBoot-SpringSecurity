@@ -24,9 +24,11 @@ import com.capyba.testeTecnico.repositories.UsuarioRepository;
 import com.capyba.testeTecnico.services.RevokService;
 import com.capyba.testeTecnico.services.tokenService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/auth")
+
 public class AuthController {
 	
 	@Autowired
@@ -38,6 +40,7 @@ public class AuthController {
 	@Autowired
 	private RevokService revok;
 	
+	@Operation(tags = "Login do usuario" , description = "Realiza login de usuário autentica um usuário e retorna um token JWT")
 	@PostMapping("/login")
 	
 	public ResponseEntity login(@RequestBody LoginDTO data) {
@@ -48,7 +51,7 @@ public class AuthController {
 		return ResponseEntity.ok(token);
 	}
 	
-	
+	@Operation(tags = "Registro do usuario")
 	@PostMapping("/registrar")
 	public ResponseEntity registarUsuario(@RequestBody RegistroDTO u) {
 if(repository.findByEmail(u.getEmail()) != null) return ResponseEntity.badRequest().build(); 
@@ -59,6 +62,7 @@ String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
 		return ResponseEntity.ok().build();
 	}
 	
+	@Operation(tags = "Logout")
 	@PostMapping("/logout")
 	public ResponseEntity logout(HttpServletRequest req) {
 		String token = tokenServ.recoverToken(req);
@@ -66,6 +70,7 @@ String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
 		return ResponseEntity.ok().build();
 	}
 	
+	@Operation(tags = "Editar cadastro")
 	@PutMapping
 	public ResponseEntity updateCadastro(@RequestBody RegistroDTO u,HttpServletRequest req) {
 		
@@ -80,6 +85,7 @@ String senhaEncrypitada = new BCryptPasswordEncoder().encode(u.getSenha());
 		return ResponseEntity.ok().build();
 	}
 	
+	@Operation(tags = "Retorna os termos de uso")
 	@GetMapping("/policy")
 	public ResponseEntity policy() throws FileNotFoundException{
 		InputStream inputStream = new FileInputStream("src\\main\\java\\policy\\policy.pdf");
