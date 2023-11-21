@@ -116,7 +116,7 @@ GET /produtos?orderby=nome/preco - Retrieve a list of all products ordered by 'n
 ```
 
 ```markdown
-GET /produtos?search=string -  Retrieve a list of all products that matches with the inputed string
+GET /produtos?search=string -  Retrieve a list of all products that matches with the inputted string
 ```
 **Ex: search=tec**
 ```json
