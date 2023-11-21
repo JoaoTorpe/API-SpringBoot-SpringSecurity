@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -26,6 +27,7 @@ class ProdutoRepositoryTest {
 	@Autowired
 	EntityManager entityManeger;
 	@Test
+	@DisplayName("Encotrar por disponibilidade")
 	void findByDisponibilidade() {
 		generateProdutos();
 		List<Produto> produtosDisponiveis = Repository.findByDisponibilidade(true);
@@ -39,6 +41,7 @@ class ProdutoRepositoryTest {
 	}
 	
 	@Test
+	@DisplayName("Ordena por paramentro, nome ou preco")
 	void testaOrdenacao() {
 		generateProdutos();
 		
